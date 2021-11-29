@@ -5,8 +5,10 @@
  */
 package br.edu.ifsp.pep.view;
 
+import br.edu.ifsp.pep.dao.AlunoDAO;
 import br.edu.ifsp.pep.dao.PersonalDAO;
 import br.edu.ifsp.pep.dao.UsuarioDAO;
+import br.edu.ifsp.pep.model.Aluno;
 import br.edu.ifsp.pep.model.Personal;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -16,8 +18,8 @@ import javax.swing.table.DefaultTableModel;
  * @author joaop
  */
 public class CadastroAluno extends javax.swing.JDialog {
-    
-    private PersonalDAO dao = new PersonalDAO();
+
+    private AlunoDAO dao = new AlunoDAO();
 
     /**
      * Creates new form MenuPersonal
@@ -26,38 +28,38 @@ public class CadastroAluno extends javax.swing.JDialog {
         initComponents();
 //        txtNo.setText(UsuarioDAO.getUsu().getNome());
         atualiza();
-        
+
     }
-    
-    ArrayList<Personal> listapersonal = new ArrayList<>();
-    
+
+    ArrayList<Aluno> listaaluno = new ArrayList<>();
+
     public void atualiza() {
-        
+
         DefaultTableModel model = (DefaultTableModel) TabelaAlunos.getModel();
-        
+
         while (model.getRowCount() > 0) {//pega a quantidade de linhas da tabela
             model.removeRow(0);
         }
-        
-        for (Personal pe : dao.listPersonal()) {
+
+        for (Aluno pe : dao.listAluno()) {
             model.addRow(new Object[]{pe.getCodigo(), pe.getNome(), pe.getEmail()});
         }
     }
-    
-    public Personal getPersonal() {
-        
-        Personal pe = new Personal();
-        
+
+    public Aluno getAluno() {
+
+        Aluno pe = new Aluno();
+
         pe.setNome(txtNome.getText());
         pe.setLogin(txtLogin.getText());
         pe.setSenha(txtEmail.getText());
         pe.setEmail(labelEmail.getText());
-        
+
         return pe;
     }
-    
+
     public void setPersonal(Personal pe) {
-        
+
         txtNome.setText(pe.getNome());
         txtLogin.setText(pe.getLogin());
         txtEmail.setText(pe.getSenha());
@@ -265,19 +267,18 @@ public class CadastroAluno extends javax.swing.JDialog {
         String nome = txtNome.getText();
         String login = txtLogin.getText();
         String senha = String.valueOf(txtSenha.getPassword());
-        String email = labelEmail.getText();
-        
-        Personal pe = new Personal(nome, login, senha, email);
-        
+        String email = txtEmail.getText();
+
+        Aluno pe = new Aluno(nome, login, senha, email);
+
         dao.insert(pe);
-        
+
         atualiza();
-        
-        labelEmail.setText("");
+
         txtEmail.setText("");
         txtLogin.setText("");
         txtNome.setText("");
-        
+        txtSenha.setText("");
 
     }//GEN-LAST:event_btnCadastrarMouseClicked
 

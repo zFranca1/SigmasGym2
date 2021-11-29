@@ -69,6 +69,7 @@ public class MenuPersonal extends javax.swing.JDialog {
 
         txtNomePersonalLogado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtNomePersonalLogado.setForeground(new java.awt.Color(255, 255, 255));
+        txtNomePersonalLogado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtNomePersonalLogado.setText("NOME");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -76,16 +77,16 @@ public class MenuPersonal extends javax.swing.JDialog {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(txtNomePersonalLogado)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addGap(60, 60, 60)
+                .addComponent(txtNomePersonalLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(txtNomePersonalLogado)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         painelCadastroAluno.setBackground(new java.awt.Color(30, 43, 76));
@@ -93,6 +94,11 @@ public class MenuPersonal extends javax.swing.JDialog {
         txtCadastroAluno.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txtCadastroAluno.setForeground(new java.awt.Color(255, 255, 255));
         txtCadastroAluno.setText("Cadastro Alunos");
+        txtCadastroAluno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCadastroAlunoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelCadastroAlunoLayout = new javax.swing.GroupLayout(painelCadastroAluno);
         painelCadastroAluno.setLayout(painelCadastroAlunoLayout);
@@ -145,10 +151,7 @@ public class MenuPersonal extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(painelCadastroAluno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(painelCadastroPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,9 +188,18 @@ public class MenuPersonal extends javax.swing.JDialog {
 
         CadastroPersonal cadpe = new CadastroPersonal();
         cadpe.setVisible(true);
-
+        
 
     }//GEN-LAST:event_txtCadastroPersonalMouseClicked
+
+    private void txtCadastroAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCadastroAlunoMouseClicked
+        // TODO add your handling code here:
+        
+        CadastroAluno cadal = new CadastroAluno();
+        cadal.setVisible(true);
+        
+
+    }//GEN-LAST:event_txtCadastroAlunoMouseClicked
 
     /**
      * @param args the command line arguments

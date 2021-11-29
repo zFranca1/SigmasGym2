@@ -49,4 +49,13 @@ public class AlunoDAO {
 
     }
 
+    public List<Aluno> listbyName(String nome) {
+
+        EntityManager em = this.emf.createEntityManager();
+        TypedQuery<Aluno> query = em.createNamedQuery("Aluno.findByName", Aluno.class);
+
+        return query.getResultList();
+
+    }
+
 }

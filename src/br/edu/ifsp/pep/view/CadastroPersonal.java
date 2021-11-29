@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  * @author joaop
  */
 public class CadastroPersonal extends javax.swing.JDialog {
-    
+
     private PersonalDAO dao = new PersonalDAO();
 
     /**
@@ -23,40 +23,40 @@ public class CadastroPersonal extends javax.swing.JDialog {
      */
     public CadastroPersonal() {
         initComponents();
-        
+
         atualiza();
-        
+
     }
-    
+
     ArrayList<Personal> listapersonal = new ArrayList<>();
-    
+
     public void atualiza() {
-        
+
         DefaultTableModel model = (DefaultTableModel) TabelaPersonal.getModel();
-        
+
         while (model.getRowCount() > 0) {//pega a quantidade de linhas da tabela
             model.removeRow(0);
         }
-        
+
         for (Personal pe : dao.listPersonal()) {
             model.addRow(new Object[]{pe.getCodigo(), pe.getNome(), pe.getEmail()});
         }
     }
-    
+
     public Personal getPersonal() {
-        
+
         Personal pe = new Personal();
-        
+
         pe.setNome(txtNome.getText());
         pe.setLogin(txtLogin.getText());
         pe.setSenha(txtEmail.getText());
         pe.setEmail(labelEmail.getText());
-        
+
         return pe;
     }
-    
+
     public void setPersonal(Personal pe) {
-        
+
         txtNome.setText(pe.getNome());
         txtLogin.setText(pe.getLogin());
         txtEmail.setText(pe.getSenha());
@@ -264,19 +264,19 @@ public class CadastroPersonal extends javax.swing.JDialog {
         String nome = txtNome.getText();
         String login = txtLogin.getText();
         String senha = String.valueOf(txtSenha.getPassword());
-        String email = labelEmail.getText();
-        
+        String email = txtEmail.getText();
+
         Personal pe = new Personal(nome, login, senha, email);
-        
+
         dao.insert(pe);
-        
+
         atualiza();
-        
-        labelEmail.setText("");
+
+        txtSenha.setText("");
         txtEmail.setText("");
         txtLogin.setText("");
         txtNome.setText("");
-        
+
 
     }//GEN-LAST:event_btnCadastrarMouseClicked
 
