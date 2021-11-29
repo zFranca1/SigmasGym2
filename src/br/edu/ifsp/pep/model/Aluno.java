@@ -25,8 +25,8 @@ public class Aluno extends Usuario implements Serializable {
     public Aluno() {
     }
 
-    public Aluno(int codigo, String nome, String login, String senha, String email, char tipo) {
-        super(codigo, nome, login, senha, email, tipo);
+    public Aluno(String nome, String login, String senha, String email) {
+        super(nome, login, senha, email);
     }
 
     @Override

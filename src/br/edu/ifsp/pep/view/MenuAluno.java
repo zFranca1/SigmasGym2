@@ -11,14 +11,15 @@ import br.edu.ifsp.pep.dao.UsuarioDAO;
  *
  * @author joaop
  */
-public class MenuPersonal extends javax.swing.JDialog {
+public class MenuAluno extends javax.swing.JDialog {
 
     /**
      * Creates new form MenuPersonal
      */
-    public MenuPersonal() {
+    public MenuAluno() {
         initComponents();
-        txtNomePersonalLogado.setText(UsuarioDAO.getUsu().getNome());
+        txtNomeAlunolLogado.setText(UsuarioDAO.getUsu().getNome());
+
     }
 
     /**
@@ -34,11 +35,11 @@ public class MenuPersonal extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        txtNomePersonalLogado = new javax.swing.JLabel();
+        txtNomeAlunolLogado = new javax.swing.JLabel();
         painelCadastroAluno = new javax.swing.JPanel();
-        txtCadastroAluno = new javax.swing.JLabel();
+        txtAvaliacaoFisica = new javax.swing.JLabel();
         painelCadastroPersonal = new javax.swing.JPanel();
-        txtCadastroPersonal = new javax.swing.JLabel();
+        txtFichasTreino = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -67,9 +68,9 @@ public class MenuPersonal extends javax.swing.JDialog {
 
         jPanel4.setBackground(new java.awt.Color(30, 43, 76));
 
-        txtNomePersonalLogado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtNomePersonalLogado.setForeground(new java.awt.Color(255, 255, 255));
-        txtNomePersonalLogado.setText("NOME");
+        txtNomeAlunolLogado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtNomeAlunolLogado.setForeground(new java.awt.Color(255, 255, 255));
+        txtNomeAlunolLogado.setText("NOME");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -77,22 +78,22 @@ public class MenuPersonal extends javax.swing.JDialog {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addComponent(txtNomePersonalLogado)
+                .addComponent(txtNomeAlunolLogado)
                 .addContainerGap(60, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtNomePersonalLogado)
+                .addComponent(txtNomeAlunolLogado)
                 .addContainerGap())
         );
 
         painelCadastroAluno.setBackground(new java.awt.Color(30, 43, 76));
 
-        txtCadastroAluno.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        txtCadastroAluno.setForeground(new java.awt.Color(255, 255, 255));
-        txtCadastroAluno.setText("Cadastro Alunos");
+        txtAvaliacaoFisica.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txtAvaliacaoFisica.setForeground(new java.awt.Color(255, 255, 255));
+        txtAvaliacaoFisica.setText("Avaliação Fisica");
 
         javax.swing.GroupLayout painelCadastroAlunoLayout = new javax.swing.GroupLayout(painelCadastroAluno);
         painelCadastroAluno.setLayout(painelCadastroAlunoLayout);
@@ -100,27 +101,22 @@ public class MenuPersonal extends javax.swing.JDialog {
             painelCadastroAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCadastroAlunoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtCadastroAluno)
+                .addComponent(txtAvaliacaoFisica)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelCadastroAlunoLayout.setVerticalGroup(
             painelCadastroAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCadastroAlunoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtCadastroAluno)
+                .addComponent(txtAvaliacaoFisica)
                 .addContainerGap())
         );
 
         painelCadastroPersonal.setBackground(new java.awt.Color(30, 43, 76));
 
-        txtCadastroPersonal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        txtCadastroPersonal.setForeground(new java.awt.Color(255, 255, 255));
-        txtCadastroPersonal.setText("Cadastro Personal");
-        txtCadastroPersonal.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtCadastroPersonalMouseClicked(evt);
-            }
-        });
+        txtFichasTreino.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txtFichasTreino.setForeground(new java.awt.Color(255, 255, 255));
+        txtFichasTreino.setText("Fichas de Treino");
 
         javax.swing.GroupLayout painelCadastroPersonalLayout = new javax.swing.GroupLayout(painelCadastroPersonal);
         painelCadastroPersonal.setLayout(painelCadastroPersonalLayout);
@@ -128,14 +124,14 @@ public class MenuPersonal extends javax.swing.JDialog {
             painelCadastroPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCadastroPersonalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtCadastroPersonal)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addComponent(txtFichasTreino)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelCadastroPersonalLayout.setVerticalGroup(
             painelCadastroPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCadastroPersonalLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtCadastroPersonal)
+                .addComponent(txtFichasTreino)
                 .addContainerGap())
         );
 
@@ -146,9 +142,9 @@ public class MenuPersonal extends javax.swing.JDialog {
             .addComponent(painelCadastroAluno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(painelCadastroPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(57, 57, 57)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +155,7 @@ public class MenuPersonal extends javax.swing.JDialog {
                 .addComponent(painelCadastroAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(painelCadastroPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(341, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -180,15 +176,6 @@ public class MenuPersonal extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCadastroPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCadastroPersonalMouseClicked
-        // TODO add your handling code here:
-
-        CadastroPersonal cadpe = new CadastroPersonal();
-        cadpe.setVisible(true);
-
-
-    }//GEN-LAST:event_txtCadastroPersonalMouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -206,20 +193,21 @@ public class MenuPersonal extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuPersonal().setVisible(true);
+                new MenuAluno().setVisible(true);
             }
         });
     }
@@ -231,8 +219,8 @@ public class MenuPersonal extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel painelCadastroAluno;
     private javax.swing.JPanel painelCadastroPersonal;
-    private javax.swing.JLabel txtCadastroAluno;
-    private javax.swing.JLabel txtCadastroPersonal;
-    private javax.swing.JLabel txtNomePersonalLogado;
+    private javax.swing.JLabel txtAvaliacaoFisica;
+    private javax.swing.JLabel txtFichasTreino;
+    private javax.swing.JLabel txtNomeAlunolLogado;
     // End of variables declaration//GEN-END:variables
 }

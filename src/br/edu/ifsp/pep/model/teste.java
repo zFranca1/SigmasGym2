@@ -9,6 +9,6 @@ package br.edu.ifsp.pep.model;
  *
  * @author joaop
  */
-public class FichaTreino {
+public class teste {
     
 }

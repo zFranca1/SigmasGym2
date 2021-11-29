@@ -5,17 +5,62 @@
  */
 package br.edu.ifsp.pep.view;
 
+import br.edu.ifsp.pep.dao.PersonalDAO;
+import br.edu.ifsp.pep.model.Personal;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author joaop
  */
 public class CadastroPersonal extends javax.swing.JDialog {
+    
+    private PersonalDAO dao = new PersonalDAO();
 
     /**
      * Creates new form MenuPersonal
      */
     public CadastroPersonal() {
         initComponents();
+        
+        atualiza();
+        
+    }
+    
+    ArrayList<Personal> listapersonal = new ArrayList<>();
+    
+    public void atualiza() {
+        
+        DefaultTableModel model = (DefaultTableModel) TabelaPersonal.getModel();
+        
+        while (model.getRowCount() > 0) {//pega a quantidade de linhas da tabela
+            model.removeRow(0);
+        }
+        
+        for (Personal pe : dao.listPersonal()) {
+            model.addRow(new Object[]{pe.getCodigo(), pe.getNome(), pe.getEmail()});
+        }
+    }
+    
+    public Personal getPersonal() {
+        
+        Personal pe = new Personal();
+        
+        pe.setNome(txtNome.getText());
+        pe.setLogin(txtLogin.getText());
+        pe.setSenha(txtEmail.getText());
+        pe.setEmail(labelEmail.getText());
+        
+        return pe;
+    }
+    
+    public void setPersonal(Personal pe) {
+        
+        txtNome.setText(pe.getNome());
+        txtLogin.setText(pe.getLogin());
+        txtEmail.setText(pe.getSenha());
+        labelEmail.setText(pe.getEmail());
     }
 
     /**
@@ -35,18 +80,12 @@ public class CadastroPersonal extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         txtLogin = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtSenha = new javax.swing.JTextField();
-        txtEmail = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        labelEmail = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        txtNomePersonalLogado = new javax.swing.JLabel();
-        painelCadastroAluno = new javax.swing.JPanel();
-        txtCadastroAluno = new javax.swing.JLabel();
-        painelCadastroPersonal = new javax.swing.JPanel();
-        txtCadastroPersonal = new javax.swing.JLabel();
+        txtSenha = new javax.swing.JPasswordField();
+        btnCadastrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -87,21 +126,34 @@ public class CadastroPersonal extends javax.swing.JDialog {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Login");
 
-        txtSenha.addActionListener(new java.awt.event.ActionListener() {
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSenhaActionPerformed(evt);
+                txtEmailActionPerformed(evt);
             }
         });
 
-        txtEmail.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtEmail.setForeground(new java.awt.Color(255, 255, 255));
-        txtEmail.setText("E-mail");
+        labelEmail.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelEmail.setForeground(new java.awt.Color(255, 255, 255));
+        labelEmail.setText("E-mail");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Senha");
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifsp/pep/images/small_logo.png"))); // NOI18N
+
+        btnCadastrar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCadastrarMouseClicked(evt);
+            }
+        });
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelMenuLayout = new javax.swing.GroupLayout(painelMenu);
         painelMenu.setLayout(painelMenuLayout);
@@ -110,31 +162,38 @@ public class CadastroPersonal extends javax.swing.JDialog {
             .addGroup(painelMenuLayout.createSequentialGroup()
                 .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelMenuLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(painelMenuLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(logo))))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
                     .addGroup(painelMenuLayout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtEmail)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(117, 117, 117))
-                            .addComponent(txtSenha)
-                            .addComponent(jPasswordField1))
-                        .addGap(18, 18, 18)
-                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(logo))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
+                                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(30, 30, 30)
+                                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(labelEmail)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(117, 117, 117))
+                                    .addComponent(txtEmail)
+                                    .addComponent(txtSenha))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(9, 9, 9)))
+                        .addGap(0, 13, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(painelMenuLayout.createSequentialGroup()
+                .addGap(229, 229, 229)
+                .addComponent(btnCadastrar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelMenuLayout.setVerticalGroup(
             painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,122 +206,29 @@ public class CadastroPersonal extends javax.swing.JDialog {
                         .addGap(42, 42, 42)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(painelMenuLayout.createSequentialGroup()
+                            .addComponent(labelEmail)
+                            .addGap(36, 36, 36))
+                        .addGroup(painelMenuLayout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(painelMenuLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(painelMenuLayout.createSequentialGroup()
-                        .addComponent(txtEmail)
-                        .addGap(36, 36, 36))
-                    .addGroup(painelMenuLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(99, Short.MAX_VALUE))
-        );
-
-        jPanel2.setBackground(new java.awt.Color(35, 53, 93));
-        jPanel2.setPreferredSize(new java.awt.Dimension(224, 193));
-
-        jPanel4.setBackground(new java.awt.Color(30, 43, 76));
-
-        txtNomePersonalLogado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtNomePersonalLogado.setForeground(new java.awt.Color(255, 255, 255));
-        txtNomePersonalLogado.setText("NOME");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(txtNomePersonalLogado)
-                .addContainerGap(60, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtNomePersonalLogado)
-                .addContainerGap())
-        );
-
-        painelCadastroAluno.setBackground(new java.awt.Color(30, 43, 76));
-
-        txtCadastroAluno.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        txtCadastroAluno.setForeground(new java.awt.Color(255, 255, 255));
-        txtCadastroAluno.setText("Cadastro Alunos");
-
-        javax.swing.GroupLayout painelCadastroAlunoLayout = new javax.swing.GroupLayout(painelCadastroAluno);
-        painelCadastroAluno.setLayout(painelCadastroAlunoLayout);
-        painelCadastroAlunoLayout.setHorizontalGroup(
-            painelCadastroAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelCadastroAlunoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtCadastroAluno)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        painelCadastroAlunoLayout.setVerticalGroup(
-            painelCadastroAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCadastroAlunoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtCadastroAluno)
-                .addContainerGap())
-        );
-
-        painelCadastroPersonal.setBackground(new java.awt.Color(30, 43, 76));
-
-        txtCadastroPersonal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        txtCadastroPersonal.setForeground(new java.awt.Color(255, 255, 255));
-        txtCadastroPersonal.setText("Cadastro Personal");
-
-        javax.swing.GroupLayout painelCadastroPersonalLayout = new javax.swing.GroupLayout(painelCadastroPersonal);
-        painelCadastroPersonal.setLayout(painelCadastroPersonalLayout);
-        painelCadastroPersonalLayout.setHorizontalGroup(
-            painelCadastroPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelCadastroPersonalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtCadastroPersonal)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        painelCadastroPersonalLayout.setVerticalGroup(
-            painelCadastroPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCadastroPersonalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtCadastroPersonal)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelCadastroAluno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(painelCadastroPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(painelCadastroAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(painelCadastroPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -270,17 +236,14 @@ public class CadastroPersonal extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(painelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
-                    .addComponent(painelMenu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(painelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -295,9 +258,35 @@ public class CadastroPersonal extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLoginActionPerformed
 
-    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
+    private void btnCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSenhaActionPerformed
+
+        String nome = txtNome.getText();
+        String login = txtLogin.getText();
+        String senha = String.valueOf(txtSenha.getPassword());
+        String email = labelEmail.getText();
+        
+        Personal pe = new Personal(nome, login, senha, email);
+        
+        dao.insert(pe);
+        
+        atualiza();
+        
+        labelEmail.setText("");
+        txtEmail.setText("");
+        txtLogin.setText("");
+        txtNome.setText("");
+        
+
+    }//GEN-LAST:event_btnCadastrarMouseClicked
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -337,24 +326,18 @@ public class CadastroPersonal extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TabelaPersonal;
+    private javax.swing.JButton btnCadastrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel logo;
-    private javax.swing.JPanel painelCadastroAluno;
-    private javax.swing.JPanel painelCadastroPersonal;
     private javax.swing.JPanel painelMenu;
-    private javax.swing.JLabel txtCadastroAluno;
-    private javax.swing.JLabel txtCadastroPersonal;
-    private javax.swing.JLabel txtEmail;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtLogin;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JLabel txtNomePersonalLogado;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }

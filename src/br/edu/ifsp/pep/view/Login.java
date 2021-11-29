@@ -5,6 +5,10 @@
  */
 package br.edu.ifsp.pep.view;
 
+import br.edu.ifsp.pep.dao.UsuarioDAO;
+import br.edu.ifsp.pep.model.Usuario;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author joaop
@@ -14,8 +18,11 @@ public class Login extends javax.swing.JDialog {
     /**
      * Creates new form Login
      */
+    private UsuarioDAO dao;
+
     public Login() {
         initComponents();
+        this.dao = new UsuarioDAO();
     }
 
     /**
@@ -29,9 +36,9 @@ public class Login extends javax.swing.JDialog {
 
         bg = new javax.swing.JPanel();
         txtLogin = new javax.swing.JTextField();
-        txtSenha = new javax.swing.JTextField();
         Login = new javax.swing.JLabel();
         btnLogar = new javax.swing.JButton();
+        txtSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -43,28 +50,21 @@ public class Login extends javax.swing.JDialog {
             }
         });
 
-        txtSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSenhaActionPerformed(evt);
-            }
-        });
-
         Login.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         Login.setForeground(new java.awt.Color(255, 255, 255));
         Login.setText("Login");
 
         btnLogar.setText("Logar");
+        btnLogar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLogarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
         bgLayout.setHorizontalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
-                .addContainerGap(75, Short.MAX_VALUE)
-                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(70, 70, 70))
             .addGroup(bgLayout.createSequentialGroup()
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgLayout.createSequentialGroup()
@@ -74,6 +74,12 @@ public class Login extends javax.swing.JDialog {
                         .addGap(105, 105, 105)
                         .addComponent(btnLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
+                .addContainerGap(75, Short.MAX_VALUE)
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                    .addComponent(txtSenha))
+                .addGap(70, 70, 70))
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,9 +88,9 @@ public class Login extends javax.swing.JDialog {
                 .addComponent(Login)
                 .addGap(18, 18, 18)
                 .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(btnLogar)
                 .addGap(27, 27, 27))
         );
@@ -109,9 +115,38 @@ public class Login extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLoginActionPerformed
 
-    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
+    private void btnLogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogarMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSenhaActionPerformed
+
+        entrar();
+    }//GEN-LAST:event_btnLogarMouseClicked
+
+    public void entrar() {
+
+        String login = txtLogin.getText().trim();
+        String senha = String.valueOf(txtSenha.getPassword());
+
+        try {
+            Usuario usu = dao.login(login, senha);
+            UsuarioDAO.setUsu(usu);
+
+            // UsuarioDAO.getUsu().getCodigo();
+            switch (dao.login(login, senha).getTipo()) {
+                case 'P':
+                    MenuPersonal tela = new MenuPersonal();
+                    tela.setVisible(true);
+                    break;
+                case 'A':
+                    MenuAluno menu = new MenuAluno();
+                    menu.setVisible(true);
+                    break;
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Credenciais incorretos");
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -153,6 +188,6 @@ public class Login extends javax.swing.JDialog {
     private javax.swing.JPanel bg;
     private javax.swing.JButton btnLogar;
     private javax.swing.JTextField txtLogin;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }

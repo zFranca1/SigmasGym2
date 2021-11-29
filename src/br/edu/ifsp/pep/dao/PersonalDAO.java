@@ -7,11 +7,9 @@ package br.edu.ifsp.pep.dao;
 
 import br.edu.ifsp.pep.model.Personal;
 import java.util.List;
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
