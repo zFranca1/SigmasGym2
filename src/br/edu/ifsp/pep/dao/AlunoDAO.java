@@ -6,6 +6,7 @@
 package br.edu.ifsp.pep.dao;
 
 import br.edu.ifsp.pep.model.Aluno;
+import br.edu.ifsp.pep.model.Usuario;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -50,11 +51,40 @@ public class AlunoDAO {
     }
 
     public List<Aluno> listbyName(String nome) {
-
         EntityManager em = this.emf.createEntityManager();
+
         TypedQuery<Aluno> query = em.createNamedQuery("Aluno.findByName", Aluno.class);
+        query.setParameter("nome", "%" + nome + "%");
 
         return query.getResultList();
+
+    }
+
+    public void delete(int codigo) {
+
+        EntityManager em = this.emf.createEntityManager();
+
+        //Aluno al = buscarcodigo(codigo);
+        Aluno al = (Aluno) em.find(Usuario.class, codigo);
+
+        em.getTransaction().begin();
+        em.remove(al);
+        em.getTransaction().commit();
+        em.close();
+
+    }
+
+    public void atualizaAluno(Aluno alu, int codigo) {
+
+        EntityManager em = this.emf.createEntityManager();
+
+        System.out.println(alu.getNome());
+        em.getTransaction().begin();
+        alu.setCodigo(codigo);
+        em.merge(alu);
+
+        em.getTransaction().commit();
+        em.close();
 
     }
 
