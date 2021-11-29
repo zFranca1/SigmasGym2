@@ -79,7 +79,7 @@ public class MenuPersonal extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addComponent(txtNomePersonalLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,7 +93,7 @@ public class MenuPersonal extends javax.swing.JDialog {
 
         txtCadastroAluno.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txtCadastroAluno.setForeground(new java.awt.Color(255, 255, 255));
-        txtCadastroAluno.setText("Cadastro Alunos");
+        txtCadastroAluno.setText("Alunos");
         txtCadastroAluno.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtCadastroAlunoMouseClicked(evt);
@@ -121,7 +121,7 @@ public class MenuPersonal extends javax.swing.JDialog {
 
         txtCadastroPersonal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txtCadastroPersonal.setForeground(new java.awt.Color(255, 255, 255));
-        txtCadastroPersonal.setText("Cadastro Personal");
+        txtCadastroPersonal.setText("Personais");
         txtCadastroPersonal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtCadastroPersonalMouseClicked(evt);
@@ -135,7 +135,7 @@ public class MenuPersonal extends javax.swing.JDialog {
             .addGroup(painelCadastroPersonalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(txtCadastroPersonal)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelCadastroPersonalLayout.setVerticalGroup(
             painelCadastroPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,8 +170,8 @@ public class MenuPersonal extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(

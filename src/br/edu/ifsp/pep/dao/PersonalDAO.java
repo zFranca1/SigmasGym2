@@ -55,8 +55,34 @@ public class PersonalDAO {
 
         EntityManager em = this.emf.createEntityManager();
         TypedQuery<Personal> query = em.createNamedQuery("Personal.findByName", Personal.class);
+        query.setParameter("nome", "%" + nome + "%");
 
         return query.getResultList();
+
+    }
+
+    public void delete(int codigo) {
+
+        EntityManager em = this.emf.createEntityManager();
+
+        Personal pe = em.find(Personal.class, codigo);
+
+        em.getTransaction().begin();
+        em.remove(pe);
+        em.getTransaction().commit();
+        em.close();
+
+    }
+
+    public void atualizaPersonal(Personal pe, int codigo) {
+        EntityManager em = this.emf.createEntityManager();
+
+        em.getTransaction().begin();
+        pe.setCodigo(codigo);
+        em.merge(pe);
+
+        em.getTransaction().commit();
+        em.close();
 
     }
 

@@ -8,6 +8,8 @@ package br.edu.ifsp.pep.view;
 import br.edu.ifsp.pep.dao.PersonalDAO;
 import br.edu.ifsp.pep.model.Personal;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -49,8 +51,8 @@ public class CadastroPersonal extends javax.swing.JDialog {
 
         pe.setNome(txtNome.getText());
         pe.setLogin(txtLogin.getText());
-        pe.setSenha(txtEmail.getText());
-        pe.setEmail(labelEmail.getText());
+        pe.setSenha(String.valueOf(txtSenha.getPassword()));
+        pe.setEmail(txtEmail.getText());
 
         return pe;
     }
@@ -86,6 +88,11 @@ public class CadastroPersonal extends javax.swing.JDialog {
         logo = new javax.swing.JLabel();
         txtSenha = new javax.swing.JPasswordField();
         btnCadastrar = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        btnDeletar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -100,6 +107,11 @@ public class CadastroPersonal extends javax.swing.JDialog {
                 "Codigo", "Nome", "E-mail"
             }
         ));
+        TabelaPersonal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaPersonalMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TabelaPersonal);
 
         txtNome.addActionListener(new java.awt.event.ActionListener() {
@@ -155,6 +167,49 @@ public class CadastroPersonal extends javax.swing.JDialog {
             }
         });
 
+        btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnAlterar.setText("Alterar");
+        btnAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAlterarMouseClicked(evt);
+            }
+        });
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Buscar Personal");
+
+        btnDeletar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnDeletar.setText("Deletar");
+        btnDeletar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeletarMouseClicked(evt);
+            }
+        });
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelMenuLayout = new javax.swing.GroupLayout(painelMenu);
         painelMenu.setLayout(painelMenuLayout);
         painelMenuLayout.setHorizontalGroup(
@@ -162,37 +217,51 @@ public class CadastroPersonal extends javax.swing.JDialog {
             .addGroup(painelMenuLayout.createSequentialGroup()
                 .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelMenuLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(painelMenuLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(logo))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
-                                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(30, 30, 30)
+                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelMenuLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
                                 .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(labelEmail)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(117, 117, 117))
-                                    .addComponent(txtEmail)
-                                    .addComponent(txtSenha))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(9, 9, 9)))
-                        .addGap(0, 13, Short.MAX_VALUE)))
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(logo))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
+                                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(30, 30, 30)
+                                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(labelEmail)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
+                                                .addComponent(jLabel5)
+                                                .addGap(117, 117, 117))
+                                            .addComponent(txtEmail)
+                                            .addComponent(txtSenha))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(9, 9, 9))))
+                            .addGroup(painelMenuLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 13, Short.MAX_VALUE))
+                    .addGroup(painelMenuLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(painelMenuLayout.createSequentialGroup()
+                                .addComponent(txtBuscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscar)))))
                 .addContainerGap())
             .addGroup(painelMenuLayout.createSequentialGroup()
-                .addGap(229, 229, 229)
-                .addComponent(btnCadastrar)
+                .addContainerGap()
+                .addComponent(jLabel4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelMenuLayout.setVerticalGroup(
@@ -224,11 +293,20 @@ public class CadastroPersonal extends javax.swing.JDialog {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -288,6 +366,99 @@ public class CadastroPersonal extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
+    private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
+        // TODO add your handling code here:
+
+        int linha;
+
+        Personal pe = getPersonal();
+
+        linha = TabelaPersonal.getSelectedRow();
+
+        if (linha == -1) {
+
+            JOptionPane.showMessageDialog(this, "voce deve selecionar um personal para alterar.");
+
+        } else if (txtLogin.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Digite seu login e sua senha, para fazer a alteração");
+        } else {
+            dao.atualizaPersonal(pe, Integer.parseInt((String) TabelaPersonal.getValueAt(TabelaPersonal.getSelectedRow(), 0).toString()));
+        }
+
+        atualiza();
+
+        txtSenha.setText("");
+        txtEmail.setText("");
+        txtLogin.setText("");
+        txtNome.setText("");
+
+    }//GEN-LAST:event_btnAlterarMouseClicked
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void btnDeletarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeletarMouseClicked
+        // TODO add your handling code here:
+
+        int linha;
+
+        linha = TabelaPersonal.getSelectedRow();
+
+        if (linha == -1) {
+
+            JOptionPane.showMessageDialog(this, "voce deve selecionar um Personal para Excluir.");
+
+        } else {
+
+            dao.delete(Integer.parseInt((String) TabelaPersonal.getValueAt(TabelaPersonal.getSelectedRow(), 0).toString()));
+
+        }
+
+        atualiza();
+
+        txtSenha.setText("");
+        txtEmail.setText("");
+        txtLogin.setText("");
+        txtNome.setText("");
+
+
+    }//GEN-LAST:event_btnDeletarMouseClicked
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void TabelaPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaPersonalMouseClicked
+        // TODO add your handling code here:
+
+        if (TabelaPersonal.getSelectedRow() != -1) {
+
+            txtNome.setText(TabelaPersonal.getValueAt(TabelaPersonal.getSelectedRow(), 1).toString());
+            txtEmail.setText(TabelaPersonal.getValueAt(TabelaPersonal.getSelectedRow(), 2).toString());
+        }
+    }//GEN-LAST:event_TabelaPersonalMouseClicked
+
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        // TODO add your handling code here:
+
+        List<Personal> listapersonal = this.dao.listbyName(txtBuscar.getText());
+
+        DefaultTableModel model = (DefaultTableModel) TabelaPersonal.getModel();
+        model.setRowCount(0);
+        for (Personal pe : listapersonal) {
+            model.addRow(new Object[]{pe.getCodigo(), pe.getNome(), pe.getEmail()});
+        }
+
+        txtBuscar.setText("");
+
+
+    }//GEN-LAST:event_btnBuscarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -326,15 +497,20 @@ public class CadastroPersonal extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TabelaPersonal;
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnDeletar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel painelMenu;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtLogin;
     private javax.swing.JTextField txtNome;
