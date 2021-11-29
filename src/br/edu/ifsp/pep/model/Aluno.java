@@ -19,7 +19,13 @@ import javax.persistence.NamedQuery;
 @DiscriminatorValue("A")
 @NamedQueries({
     @NamedQuery(name = "Aluno.findByCodigo",
-            query = "SELECT a FROM Aluno a WHERE a.codigo = :codigo")})
+            query = "SELECT a FROM Aluno a WHERE a.codigo = :codigo"),
+    @NamedQuery(name = "Aluno.findByName",
+            query = "select a from Aluno a where a.nome LIKE :nome"),
+    @NamedQuery(name = "Aluno.find",
+            query = "select a from Aluno a")
+})
+
 public class Aluno extends Usuario implements Serializable {
 
     public Aluno() {
