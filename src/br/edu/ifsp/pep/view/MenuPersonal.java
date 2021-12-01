@@ -39,6 +39,8 @@ public class MenuPersonal extends javax.swing.JDialog {
         txtCadastroAluno = new javax.swing.JLabel();
         painelCadastroPersonal = new javax.swing.JPanel();
         txtCadastroPersonal = new javax.swing.JLabel();
+        painelCadastroPersonal1 = new javax.swing.JPanel();
+        txtCadastroAvaliacao = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -145,6 +147,34 @@ public class MenuPersonal extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        painelCadastroPersonal1.setBackground(new java.awt.Color(30, 43, 76));
+
+        txtCadastroAvaliacao.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txtCadastroAvaliacao.setForeground(new java.awt.Color(255, 255, 255));
+        txtCadastroAvaliacao.setText("Avaliação");
+        txtCadastroAvaliacao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCadastroAvaliacaoMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout painelCadastroPersonal1Layout = new javax.swing.GroupLayout(painelCadastroPersonal1);
+        painelCadastroPersonal1.setLayout(painelCadastroPersonal1Layout);
+        painelCadastroPersonal1Layout.setHorizontalGroup(
+            painelCadastroPersonal1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelCadastroPersonal1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtCadastroAvaliacao)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        painelCadastroPersonal1Layout.setVerticalGroup(
+            painelCadastroPersonal1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCadastroPersonal1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtCadastroAvaliacao)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -152,6 +182,7 @@ public class MenuPersonal extends javax.swing.JDialog {
             .addComponent(painelCadastroAluno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(painelCadastroPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painelCadastroPersonal1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +193,9 @@ public class MenuPersonal extends javax.swing.JDialog {
                 .addComponent(painelCadastroAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(painelCadastroPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(341, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(painelCadastroPersonal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -200,6 +233,15 @@ public class MenuPersonal extends javax.swing.JDialog {
         
 
     }//GEN-LAST:event_txtCadastroAlunoMouseClicked
+
+    private void txtCadastroAvaliacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCadastroAvaliacaoMouseClicked
+        // TODO add your handling code here:
+        
+        CadastroAvaliacao cadav = new CadastroAvaliacao();
+        cadav.setVisible(true);
+        
+
+    }//GEN-LAST:event_txtCadastroAvaliacaoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -243,7 +285,9 @@ public class MenuPersonal extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel painelCadastroAluno;
     private javax.swing.JPanel painelCadastroPersonal;
+    private javax.swing.JPanel painelCadastroPersonal1;
     private javax.swing.JLabel txtCadastroAluno;
+    private javax.swing.JLabel txtCadastroAvaliacao;
     private javax.swing.JLabel txtCadastroPersonal;
     private javax.swing.JLabel txtNomePersonalLogado;
     // End of variables declaration//GEN-END:variables

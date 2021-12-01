@@ -63,37 +63,38 @@ public class AvaliacaoDAO {
 
     }
 
-    public Avaliacao buscarPorId(int id) {
+//    public Avaliacao buscarPorId(int id) {
+//        EntityManager em = this.emf.createEntityManager();
+//        TypedQuery<Avaliacao> query = em.createNamedQuery("avaliacao.buscar_id", Avaliacao.class);
+//        query.setParameter("id", id);
+//
+//        return (Avaliacao) query.getSingleResult();
+//    }
+    public Avaliacao buscarcodigo(int codigo) {
+
         EntityManager em = this.emf.createEntityManager();
         TypedQuery<Avaliacao> query = em.createNamedQuery("avaliacao.buscar_id", Avaliacao.class);
-        query.setParameter("id", id);
+
+        query.setParameter("codigo", codigo);
 
         return (Avaliacao) query.getSingleResult();
     }
 
-    public Avaliacao buscarcodigo(int codigo) {
-
-        EntityManager em = this.emf.createEntityManager();
-        TypedQuery<Avaliacao> query = em.createQuery("select a from Avaliacao a where a.idAvaliacao = :idAvaliacao", Avaliacao.class);
-
-        query.setParameter("idAvaliacao", codigo);
-
-        return query.getSingleResult();
-    }
-
-    public void delete(int codigo) {
+    public void delete(Avaliacao av) {
 
         EntityManager em = this.emf.createEntityManager();
 
-        Avaliacao av = buscarcodigo(codigo);
-
-        if (!em.contains(av)) {
-
-            av = em.merge(av);
-
-        }
+//        Avaliacao av = buscarcodigo(codigo);
+//        Avaliacao av = (Avaliacao) em.find(Avaliacao.class, codigo);
+//        System.out.println(av.toString());
+//        if (!em.contains(av)) {
+//
+//            av = em.merge(av);
+//
+//        }
         em.getTransaction().begin();
-        em.remove(av);
+        System.out.println(av.toString());
+        em.remove(em.merge(av));
         em.getTransaction().commit();
         em.close();
 

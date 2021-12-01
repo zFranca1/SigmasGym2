@@ -5,6 +5,7 @@
     <class>br.edu.ifsp.pep.model.Aluno</class>
     <class>br.edu.ifsp.pep.model.Personal</class>
     <class>br.edu.ifsp.pep.model.Usuario</class>
+    <class>br.edu.ifsp.pep.model.Avaliacao</class>
     <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/academia2?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
