@@ -23,7 +23,7 @@ public class FichaTreinoDAO {
 
     public FichaTreinoDAO() {
 
-        this.emf = Persistence.createEntityManagerFactory("Academia2PU");
+        this.emf = Persistence.createEntityManagerFactory("SigmasGymPU");
     }
 
     public EntityManager getEntityManager() {

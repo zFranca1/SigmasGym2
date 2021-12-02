@@ -43,6 +43,8 @@ public class MenuPersonal extends javax.swing.JDialog {
         txtCadastroAvaliacao = new javax.swing.JLabel();
         painelCadastroPersonal2 = new javax.swing.JPanel();
         txtCadastroExercicio = new javax.swing.JLabel();
+        painelCadastroPersonal3 = new javax.swing.JPanel();
+        txtCadastroFichaTreino = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -205,6 +207,34 @@ public class MenuPersonal extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        painelCadastroPersonal3.setBackground(new java.awt.Color(30, 43, 76));
+
+        txtCadastroFichaTreino.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txtCadastroFichaTreino.setForeground(new java.awt.Color(255, 255, 255));
+        txtCadastroFichaTreino.setText("Fichas de Treino");
+        txtCadastroFichaTreino.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCadastroFichaTreinoMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout painelCadastroPersonal3Layout = new javax.swing.GroupLayout(painelCadastroPersonal3);
+        painelCadastroPersonal3.setLayout(painelCadastroPersonal3Layout);
+        painelCadastroPersonal3Layout.setHorizontalGroup(
+            painelCadastroPersonal3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelCadastroPersonal3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtCadastroFichaTreino)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        painelCadastroPersonal3Layout.setVerticalGroup(
+            painelCadastroPersonal3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCadastroPersonal3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtCadastroFichaTreino)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -214,6 +244,7 @@ public class MenuPersonal extends javax.swing.JDialog {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(painelCadastroPersonal1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(painelCadastroPersonal2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painelCadastroPersonal3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,12 +253,14 @@ public class MenuPersonal extends javax.swing.JDialog {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(painelCadastroAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelCadastroPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelCadastroPersonal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelCadastroPersonal2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(painelCadastroPersonal3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -283,6 +316,13 @@ public class MenuPersonal extends javax.swing.JDialog {
         cade.setVisible(true);
     }//GEN-LAST:event_txtCadastroExercicioMouseClicked
 
+    private void txtCadastroFichaTreinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCadastroFichaTreinoMouseClicked
+        // TODO add your handling code here:
+        
+        FichasTreino fic = new FichasTreino();
+        fic.setVisible(true);
+    }//GEN-LAST:event_txtCadastroFichaTreinoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -327,9 +367,11 @@ public class MenuPersonal extends javax.swing.JDialog {
     private javax.swing.JPanel painelCadastroPersonal;
     private javax.swing.JPanel painelCadastroPersonal1;
     private javax.swing.JPanel painelCadastroPersonal2;
+    private javax.swing.JPanel painelCadastroPersonal3;
     private javax.swing.JLabel txtCadastroAluno;
     private javax.swing.JLabel txtCadastroAvaliacao;
     private javax.swing.JLabel txtCadastroExercicio;
+    private javax.swing.JLabel txtCadastroFichaTreino;
     private javax.swing.JLabel txtCadastroPersonal;
     private javax.swing.JLabel txtNomePersonalLogado;
     // End of variables declaration//GEN-END:variables
