@@ -63,13 +63,6 @@ public class AvaliacaoDAO {
 
     }
 
-//    public Avaliacao buscarPorId(int id) {
-//        EntityManager em = this.emf.createEntityManager();
-//        TypedQuery<Avaliacao> query = em.createNamedQuery("avaliacao.buscar_id", Avaliacao.class);
-//        query.setParameter("id", id);
-//
-//        return (Avaliacao) query.getSingleResult();
-//    }
     public Avaliacao buscarcodigo(int codigo) {
 
         EntityManager em = this.emf.createEntityManager();
@@ -84,14 +77,6 @@ public class AvaliacaoDAO {
 
         EntityManager em = this.emf.createEntityManager();
 
-//        Avaliacao av = buscarcodigo(codigo);
-//        Avaliacao av = (Avaliacao) em.find(Avaliacao.class, codigo);
-//        System.out.println(av.toString());
-//        if (!em.contains(av)) {
-//
-//            av = em.merge(av);
-//
-//        }
         em.getTransaction().begin();
         System.out.println(av.toString());
         em.remove(em.merge(av));

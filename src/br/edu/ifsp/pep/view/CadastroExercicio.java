@@ -19,14 +19,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author joaop
  */
-public class CadastroAluno extends javax.swing.JDialog {
+public class CadastroExercicio extends javax.swing.JDialog {
 
     private AlunoDAO dao = new AlunoDAO();
 
     /**
      * Creates new form MenuPersonal
      */
-    public CadastroAluno() {
+    public CadastroExercicio() {
         initComponents();
 //        txtNo.setText(UsuarioDAO.getUsu().getNome());
         atualiza();
@@ -37,7 +37,7 @@ public class CadastroAluno extends javax.swing.JDialog {
 
     public void atualiza() {
 
-        DefaultTableModel model = (DefaultTableModel) TabelaAlunos.getModel();
+        DefaultTableModel model = (DefaultTableModel) TabelaExercicios.getModel();
 
         while (model.getRowCount() > 0) {//pega a quantidade de linhas da tabela
             model.removeRow(0);
@@ -79,17 +79,11 @@ public class CadastroAluno extends javax.swing.JDialog {
 
         painelMenu = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TabelaAlunos = new javax.swing.JTable();
+        TabelaExercicios = new javax.swing.JTable();
         txtNome = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtLogin = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
-        labelEmail = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
-        txtSenha = new javax.swing.JPasswordField();
         btnCadastrar = new javax.swing.JButton();
         btnDeletar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
@@ -102,20 +96,20 @@ public class CadastroAluno extends javax.swing.JDialog {
         painelMenu.setBackground(new java.awt.Color(36, 49, 59));
         painelMenu.setPreferredSize(new java.awt.Dimension(732, 608));
 
-        TabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
+        TabelaExercicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+                {null, null}
             },
             new String [] {
-                "Codigo", "Nome", "E-mail"
+                "Codigo", "Nome"
             }
         ));
-        TabelaAlunos.addMouseListener(new java.awt.event.MouseAdapter() {
+        TabelaExercicios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TabelaAlunosMouseClicked(evt);
+                TabelaExerciciosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(TabelaAlunos);
+        jScrollPane1.setViewportView(TabelaExercicios);
 
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,35 +119,11 @@ public class CadastroAluno extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Cadastro Aluno");
+        jLabel1.setText("Cadastro Exercício");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nome");
-
-        txtLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLoginActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Login");
-
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
-            }
-        });
-
-        labelEmail.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelEmail.setForeground(new java.awt.Color(255, 255, 255));
-        labelEmail.setText("E-mail");
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Senha");
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/ifsp/pep/images/small_logo.png"))); // NOI18N
 
@@ -204,7 +174,7 @@ public class CadastroAluno extends javax.swing.JDialog {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Buscar Aluno");
+        jLabel4.setText("Buscar Exercício");
 
         btnBuscar.setText("Buscar");
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -220,6 +190,11 @@ public class CadastroAluno extends javax.swing.JDialog {
             .addGroup(painelMenuLayout.createSequentialGroup()
                 .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelMenuLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)
+                        .addGap(156, 156, 156)
+                        .addComponent(logo))
+                    .addGroup(painelMenuLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(painelMenuLayout.createSequentialGroup()
@@ -232,68 +207,32 @@ public class CadastroAluno extends javax.swing.JDialog {
                                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBuscar))
-                            .addComponent(jLabel4)))
+                            .addComponent(jLabel4)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(painelMenuLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(logo))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
-                                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(30, 30, 30)
-                                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(labelEmail)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(117, 117, 117))
-                                    .addComponent(txtEmail)
-                                    .addComponent(txtSenha))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(9, 9, 9))))
-                    .addGroup(painelMenuLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addGap(217, 217, 217)
+                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelMenuLayout.setVerticalGroup(
             painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
                 .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
+                    .addGroup(painelMenuLayout.createSequentialGroup()
                         .addComponent(logo)
-                        .addGap(4, 4, 4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(painelMenuLayout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(painelMenuLayout.createSequentialGroup()
-                            .addComponent(labelEmail)
-                            .addGap(36, 36, 36))
-                        .addGroup(painelMenuLayout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(painelMenuLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(90, 90, 90)))
                 .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
@@ -330,10 +269,6 @@ public class CadastroAluno extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
 
-    private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtLoginActionPerformed
-
     private void btnCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarMouseClicked
         // TODO add your handling code here:
 
@@ -357,10 +292,6 @@ public class CadastroAluno extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnCadastrarMouseClicked
 
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
-
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCadastrarActionPerformed
@@ -370,7 +301,7 @@ public class CadastroAluno extends javax.swing.JDialog {
 
         int linha;
 
-        linha = TabelaAlunos.getSelectedRow();
+        linha = TabelaExercicios.getSelectedRow();
 
         if (linha == -1) {
 
@@ -378,7 +309,7 @@ public class CadastroAluno extends javax.swing.JDialog {
 
         } else {
 
-            dao.delete(Integer.parseInt((String) TabelaAlunos.getValueAt(TabelaAlunos.getSelectedRow(), 0).toString()));
+            dao.delete(Integer.parseInt((String) TabelaExercicios.getValueAt(TabelaExercicios.getSelectedRow(), 0).toString()));
 
         }
 
@@ -404,7 +335,7 @@ public class CadastroAluno extends javax.swing.JDialog {
 
         Aluno pe = getAluno();
 
-        linha = TabelaAlunos.getSelectedRow();
+        linha = TabelaExercicios.getSelectedRow();
 
         if (linha == -1) {
 
@@ -413,7 +344,7 @@ public class CadastroAluno extends javax.swing.JDialog {
         } else if (txtLogin.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Digite seu login e sua senha, para fazer a alteração");
         } else {
-            dao.atualizaAluno(pe, Integer.parseInt((String) TabelaAlunos.getValueAt(TabelaAlunos.getSelectedRow(), 0).toString()));
+            dao.atualizaAluno(pe, Integer.parseInt((String) TabelaExercicios.getValueAt(TabelaExercicios.getSelectedRow(), 0).toString()));
         }
 
         atualiza();
@@ -439,7 +370,7 @@ public class CadastroAluno extends javax.swing.JDialog {
 
         List<Aluno> listaaluno = this.dao.listbyName(txtBuscar.getText());
 
-        DefaultTableModel model = (DefaultTableModel) TabelaAlunos.getModel();
+        DefaultTableModel model = (DefaultTableModel) TabelaExercicios.getModel();
         model.setRowCount(0);
         for (Aluno pe : listaaluno) {
             model.addRow(new Object[]{pe.getCodigo(), pe.getNome(), pe.getEmail()});
@@ -449,15 +380,15 @@ public class CadastroAluno extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnBuscarMouseClicked
 
-    private void TabelaAlunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaAlunosMouseClicked
+    private void TabelaExerciciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaExerciciosMouseClicked
         // TODO add your handling code here:
 
-        if (TabelaAlunos.getSelectedRow() != -1) {
+        if (TabelaExercicios.getSelectedRow() != -1) {
 
-            txtNome.setText(TabelaAlunos.getValueAt(TabelaAlunos.getSelectedRow(), 1).toString());
-            txtEmail.setText(TabelaAlunos.getValueAt(TabelaAlunos.getSelectedRow(), 2).toString());
+            txtNome.setText(TabelaExercicios.getValueAt(TabelaExercicios.getSelectedRow(), 1).toString());
+            txtEmail.setText(TabelaExercicios.getValueAt(TabelaExercicios.getSelectedRow(), 2).toString());
         }
-    }//GEN-LAST:event_TabelaAlunosMouseClicked
+    }//GEN-LAST:event_TabelaExerciciosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -498,24 +429,18 @@ public class CadastroAluno extends javax.swing.JDialog {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TabelaAlunos;
+    private javax.swing.JTable TabelaExercicios;
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnDeletar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel painelMenu;
     private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtLogin;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }
