@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +25,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "exercicio")
+@NamedQueries({
+    @NamedQuery(name = "Exercicio.listar", query = "select e from Exercicio e"),
+    @NamedQuery(name = "Exercicio.listaNomes",
+            query = "SELECT e FROM Exercicio e WHERE e.nome LIKE :nome")
+})
 
 public class Exercicio implements Serializable {
 

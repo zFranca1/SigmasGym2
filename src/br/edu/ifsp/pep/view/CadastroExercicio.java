@@ -5,10 +5,9 @@
  */
 package br.edu.ifsp.pep.view;
 
-import br.edu.ifsp.pep.dao.AlunoDAO;
-import br.edu.ifsp.pep.dao.PersonalDAO;
-import br.edu.ifsp.pep.dao.UsuarioDAO;
+import br.edu.ifsp.pep.dao.ExercicioDAO;
 import br.edu.ifsp.pep.model.Aluno;
+import br.edu.ifsp.pep.model.Exercicio;
 import br.edu.ifsp.pep.model.Personal;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CadastroExercicio extends javax.swing.JDialog {
 
-    private AlunoDAO dao = new AlunoDAO();
+    private ExercicioDAO dao = new ExercicioDAO();
 
     /**
      * Creates new form MenuPersonal
@@ -33,7 +32,7 @@ public class CadastroExercicio extends javax.swing.JDialog {
 
     }
 
-    ArrayList<Aluno> listaaluno = new ArrayList<>();
+    ArrayList<Exercicio> listaexercicios = new ArrayList<>();
 
     public void atualiza() {
 
@@ -43,29 +42,24 @@ public class CadastroExercicio extends javax.swing.JDialog {
             model.removeRow(0);
         }
 
-        for (Aluno pe : dao.listAluno()) {
-            model.addRow(new Object[]{pe.getCodigo(), pe.getNome(), pe.getEmail()});
+        for (Exercicio pe : dao.listExercises()) {
+            model.addRow(new Object[]{pe.getCodigoExercicio(), pe.getNome()});
         }
     }
 
-    public Aluno getAluno() {
+    public Exercicio getExercicio() {
 
-        Aluno pe = new Aluno();
+        Exercicio pe = new Exercicio();
 
         pe.setNome(txtNome.getText());
-        pe.setLogin(txtLogin.getText());
-        pe.setSenha(String.valueOf(txtSenha.getPassword()));
-        pe.setEmail(txtEmail.getText());
 
         return pe;
     }
 
-    public void setPersonal(Personal pe) {
+    public void setExercicio(Exercicio pe) {
 
         txtNome.setText(pe.getNome());
-        txtLogin.setText(pe.getLogin());
-        txtEmail.setText(pe.getSenha());
-        labelEmail.setText(pe.getEmail());
+
     }
 
     /**
@@ -85,8 +79,6 @@ public class CadastroExercicio extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
         btnCadastrar = new javax.swing.JButton();
-        btnDeletar = new javax.swing.JButton();
-        btnAlterar = new javax.swing.JButton();
         txtBuscar = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
@@ -140,32 +132,6 @@ public class CadastroExercicio extends javax.swing.JDialog {
             }
         });
 
-        btnDeletar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnDeletar.setText("Deletar");
-        btnDeletar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnDeletarMouseClicked(evt);
-            }
-        });
-        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeletarActionPerformed(evt);
-            }
-        });
-
-        btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnAlterar.setText("Alterar");
-        btnAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAlterarMouseClicked(evt);
-            }
-        });
-        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAlterarActionPerformed(evt);
-            }
-        });
-
         txtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBuscarActionPerformed(evt);
@@ -197,12 +163,7 @@ public class CadastroExercicio extends javax.swing.JDialog {
                     .addGroup(painelMenuLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelMenuLayout.createSequentialGroup()
-                                .addComponent(btnCadastrar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnCadastrar)
                             .addGroup(painelMenuLayout.createSequentialGroup()
                                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -239,10 +200,7 @@ public class CadastroExercicio extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23)
-                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -273,93 +231,22 @@ public class CadastroExercicio extends javax.swing.JDialog {
         // TODO add your handling code here:
 
         String nome = txtNome.getText();
-        String login = txtLogin.getText();
-        String senha = String.valueOf(txtSenha.getPassword());
-        String email = txtEmail.getText();
 
-        Aluno pe = new Aluno(nome, login, senha, email);
+        Exercicio ex = new Exercicio(nome);
 
-        dao.insert(pe);
+        dao.insert(ex);
 
-        atualiza();
-
-        txtEmail.setText("");
-        txtLogin.setText("");
         txtNome.setText("");
-        txtSenha.setText("");
+
+        JOptionPane.showMessageDialog(this, "Exercicio Cadastrado com sucesso!");
         
-        JOptionPane.showMessageDialog(this, "Aluno Cadastrado com sucesso!");
+        atualiza();
 
     }//GEN-LAST:event_btnCadastrarMouseClicked
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCadastrarActionPerformed
-
-    private void btnDeletarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeletarMouseClicked
-        // TODO add your handling code here:
-
-        int linha;
-
-        linha = TabelaExercicios.getSelectedRow();
-
-        if (linha == -1) {
-
-            JOptionPane.showMessageDialog(this, "voce deve selecionar um Personal para Excluir.");
-
-        } else {
-
-            dao.delete(Integer.parseInt((String) TabelaExercicios.getValueAt(TabelaExercicios.getSelectedRow(), 0).toString()));
-
-        }
-
-        atualiza();
-
-        txtSenha.setText("");
-        txtEmail.setText("");
-        txtLogin.setText("");
-        txtNome.setText("");
-        
-        JOptionPane.showMessageDialog(this, "Aluno Deletado com sucesso!");
-
-    }//GEN-LAST:event_btnDeletarMouseClicked
-
-    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeletarActionPerformed
-
-    private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
-        // TODO add your handling code here:
-
-        int linha;
-
-        Aluno pe = getAluno();
-
-        linha = TabelaExercicios.getSelectedRow();
-
-        if (linha == -1) {
-
-            JOptionPane.showMessageDialog(this, "voce deve selecionar um personal para alterar.");
-
-        } else if (txtLogin.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Digite seu login e sua senha, para fazer a alteração");
-        } else {
-            dao.atualizaAluno(pe, Integer.parseInt((String) TabelaExercicios.getValueAt(TabelaExercicios.getSelectedRow(), 0).toString()));
-        }
-
-        atualiza();
-
-        txtSenha.setText("");
-        txtEmail.setText("");
-        txtLogin.setText("");
-        txtNome.setText("");
-        
-        JOptionPane.showMessageDialog(this, "Aluno alterado com sucesso!");
-    }//GEN-LAST:event_btnAlterarMouseClicked
-
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         // TODO add your handling code here:
@@ -368,12 +255,12 @@ public class CadastroExercicio extends javax.swing.JDialog {
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         // TODO add your handling code here:
 
-        List<Aluno> listaaluno = this.dao.listbyName(txtBuscar.getText());
+        List<Exercicio> listaexerExercicios = this.dao.listByName(txtBuscar.getText());
 
         DefaultTableModel model = (DefaultTableModel) TabelaExercicios.getModel();
         model.setRowCount(0);
-        for (Aluno pe : listaaluno) {
-            model.addRow(new Object[]{pe.getCodigo(), pe.getNome(), pe.getEmail()});
+        for (Exercicio pe : listaexerExercicios) {
+            model.addRow(new Object[]{pe.getCodigoExercicio(), pe.getNome()});
         }
 
         txtBuscar.setText("");
@@ -386,7 +273,7 @@ public class CadastroExercicio extends javax.swing.JDialog {
         if (TabelaExercicios.getSelectedRow() != -1) {
 
             txtNome.setText(TabelaExercicios.getValueAt(TabelaExercicios.getSelectedRow(), 1).toString());
-            txtEmail.setText(TabelaExercicios.getValueAt(TabelaExercicios.getSelectedRow(), 2).toString());
+
         }
     }//GEN-LAST:event_TabelaExerciciosMouseClicked
 
@@ -430,10 +317,8 @@ public class CadastroExercicio extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TabelaExercicios;
-    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnDeletar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
