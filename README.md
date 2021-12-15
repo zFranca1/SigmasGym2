@@ -1,1 +1,1 @@
-TO DE IFA NESSA PORRA TOMA NO CU
+Sistema de Gerenciamento de Fichas de Treino.
