@@ -10,10 +10,25 @@ import br.edu.ifsp.pep.dao.PersonalDAO;
 import br.edu.ifsp.pep.dao.UsuarioDAO;
 import br.edu.ifsp.pep.model.Aluno;
 import br.edu.ifsp.pep.model.Personal;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.query.JRJpaQueryExecuterFactory;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.swing.JRViewer;
+import net.sf.jasperreports.view.JasperViewer;
+import org.eclipse.persistence.internal.jpa.EntityManagerImpl;
 
 /**
  *
@@ -26,9 +41,12 @@ public class CadastroAluno extends javax.swing.JDialog {
     /**
      * Creates new form MenuPersonal
      */
+    List<Aluno> la = new ArrayList();
+
     public CadastroAluno() {
         initComponents();
 //        txtNo.setText(UsuarioDAO.getUsu().getNome());
+        la = dao.listAluno();
         atualiza();
 
     }
@@ -42,8 +60,10 @@ public class CadastroAluno extends javax.swing.JDialog {
         while (model.getRowCount() > 0) {//pega a quantidade de linhas da tabela
             model.removeRow(0);
         }
+        la.clear();
+        la = dao.listAluno();
 
-        for (Aluno pe : dao.listAluno()) {
+        for (Aluno pe : la) {
             model.addRow(new Object[]{pe.getCodigo(), pe.getNome(), pe.getEmail()});
         }
     }
@@ -96,6 +116,7 @@ public class CadastroAluno extends javax.swing.JDialog {
         txtBuscar = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
+        btnRelatorio = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -213,26 +234,25 @@ public class CadastroAluno extends javax.swing.JDialog {
             }
         });
 
+        btnRelatorio.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnRelatorio.setText("Relatorio");
+        btnRelatorio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRelatorioMouseClicked(evt);
+            }
+        });
+        btnRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatorioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelMenuLayout = new javax.swing.GroupLayout(painelMenu);
         painelMenu.setLayout(painelMenuLayout);
         painelMenuLayout.setHorizontalGroup(
             painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMenuLayout.createSequentialGroup()
                 .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelMenuLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelMenuLayout.createSequentialGroup()
-                                .addComponent(btnCadastrar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(painelMenuLayout.createSequentialGroup()
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBuscar))
-                            .addComponent(jLabel4)))
                     .addGroup(painelMenuLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -259,7 +279,21 @@ public class CadastroAluno extends javax.swing.JDialog {
                                 .addGap(9, 9, 9))))
                     .addGroup(painelMenuLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelMenuLayout.createSequentialGroup()
+                                .addComponent(btnCadastrar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelMenuLayout.createSequentialGroup()
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscar))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         painelMenuLayout.setVerticalGroup(
@@ -303,7 +337,8 @@ public class CadastroAluno extends javax.swing.JDialog {
                 .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -352,7 +387,7 @@ public class CadastroAluno extends javax.swing.JDialog {
         txtLogin.setText("");
         txtNome.setText("");
         txtSenha.setText("");
-        
+
         JOptionPane.showMessageDialog(this, "Aluno Cadastrado com sucesso!");
 
     }//GEN-LAST:event_btnCadastrarMouseClicked
@@ -388,7 +423,7 @@ public class CadastroAluno extends javax.swing.JDialog {
         txtEmail.setText("");
         txtLogin.setText("");
         txtNome.setText("");
-        
+
         JOptionPane.showMessageDialog(this, "Aluno Deletado com sucesso!");
 
     }//GEN-LAST:event_btnDeletarMouseClicked
@@ -410,8 +445,6 @@ public class CadastroAluno extends javax.swing.JDialog {
 
             JOptionPane.showMessageDialog(this, "voce deve selecionar um personal para alterar.");
 
-        } else if (txtLogin.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Digite seu login e sua senha, para fazer a alteração");
         } else {
             dao.atualizaAluno(pe, Integer.parseInt((String) TabelaAlunos.getValueAt(TabelaAlunos.getSelectedRow(), 0).toString()));
         }
@@ -422,7 +455,7 @@ public class CadastroAluno extends javax.swing.JDialog {
         txtEmail.setText("");
         txtLogin.setText("");
         txtNome.setText("");
-        
+
         JOptionPane.showMessageDialog(this, "Aluno alterado com sucesso!");
     }//GEN-LAST:event_btnAlterarMouseClicked
 
@@ -456,8 +489,40 @@ public class CadastroAluno extends javax.swing.JDialog {
 
             txtNome.setText(TabelaAlunos.getValueAt(TabelaAlunos.getSelectedRow(), 1).toString());
             txtEmail.setText(TabelaAlunos.getValueAt(TabelaAlunos.getSelectedRow(), 2).toString());
+            txtSenha.setText(la.get(TabelaAlunos.getSelectedRow()).getSenha());
+            txtLogin.setText(la.get(TabelaAlunos.getSelectedRow()).getLogin());
+
         }
     }//GEN-LAST:event_TabelaAlunosMouseClicked
+
+    private void btnRelatorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRelatorioMouseClicked
+        // TODO add your handling code here:
+
+        try {
+            InputStream is = getClass().getResourceAsStream("/br/edu/ifsp/pep/relatorio/Alunos.jrxml");
+            JasperDesign jd = JRXmlLoader.load(is);
+
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+
+            EntityManager em = new AlunoDAO().getEntityManager();
+
+            HashMap<String, Object> parametros = new HashMap<>();
+            parametros.put(JRJpaQueryExecuterFactory.PARAMETER_JPA_ENTITY_MANAGER, em);
+
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametros);
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.setVisible(true);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
+    }//GEN-LAST:event_btnRelatorioMouseClicked
+
+    private void btnRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRelatorioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -503,6 +568,7 @@ public class CadastroAluno extends javax.swing.JDialog {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnDeletar;
+    private javax.swing.JButton btnRelatorio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

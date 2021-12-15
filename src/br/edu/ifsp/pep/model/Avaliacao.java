@@ -28,8 +28,8 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "avaliacao.listar", query = "select a from Avaliacao a"),
     @NamedQuery(name = "avaliacao.buscar", query = "select a from Avaliacao a where a.aluno.nome LIKE :nome"),
-    @NamedQuery(name = "avaliacao.buscar_id", query = "select a from Avaliacao a where a.codigo = :codigo")
-
+    @NamedQuery(name = "avaliacao.buscar_id", query = "select a from Avaliacao a where a.codigo = :codigo"),
+    @NamedQuery(name = "avaliacao.listaNomes", query = "select a from Avaliacao a where a.aluno = :aluno")
 })
 public class Avaliacao implements Serializable {
 

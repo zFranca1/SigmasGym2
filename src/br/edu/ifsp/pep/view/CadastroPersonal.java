@@ -6,6 +6,7 @@
 package br.edu.ifsp.pep.view;
 
 import br.edu.ifsp.pep.dao.PersonalDAO;
+import br.edu.ifsp.pep.dao.UsuarioDAO;
 import br.edu.ifsp.pep.model.Personal;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,10 @@ public class CadastroPersonal extends javax.swing.JDialog {
     /**
      * Creates new form MenuPersonal
      */
+    List<Personal> lp = new ArrayList();
     public CadastroPersonal() {
         initComponents();
-
+        lp = dao.listPersonal();
         atualiza();
 
     }
@@ -381,9 +383,13 @@ public class CadastroPersonal extends javax.swing.JDialog {
 
             JOptionPane.showMessageDialog(this, "voce deve selecionar um personal para alterar.");
 
-        } else if (txtLogin.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Digite seu login e sua senha, para fazer a alteração");
-        } else {
+        }  else {
+            
+            if(lp.get(linha).getLogin().equals(UsuarioDAO.usu.getLogin()) &&
+                    lp.get(linha).getSenha().equals(UsuarioDAO.usu.getSenha())){
+                UsuarioDAO.usu = pe;
+            }
+            
             dao.atualizaPersonal(pe, Integer.parseInt((String) TabelaPersonal.getValueAt(TabelaPersonal.getSelectedRow(), 0).toString()));
         }
 
@@ -436,7 +442,9 @@ public class CadastroPersonal extends javax.swing.JDialog {
     }//GEN-LAST:event_btnDeletarMouseClicked
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        // TODO add your handling code here:
+       
+        
+        
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void TabelaPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaPersonalMouseClicked
@@ -446,6 +454,8 @@ public class CadastroPersonal extends javax.swing.JDialog {
 
             txtNome.setText(TabelaPersonal.getValueAt(TabelaPersonal.getSelectedRow(), 1).toString());
             txtEmail.setText(TabelaPersonal.getValueAt(TabelaPersonal.getSelectedRow(), 2).toString());
+            txtLogin.setText(lp.get(TabelaPersonal.getSelectedRow()).getLogin());
+            txtSenha.setText(lp.get(TabelaPersonal.getSelectedRow()).getSenha());
         }
     }//GEN-LAST:event_TabelaPersonalMouseClicked
 

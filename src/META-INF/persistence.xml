@@ -3,13 +3,12 @@
   <persistence-unit name="SigmasGymPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>br.edu.ifsp.pep.model.Aluno</class>
-    <class>br.edu.ifsp.pep.model.Personal</class>
-    <class>br.edu.ifsp.pep.model.Usuario</class>
     <class>br.edu.ifsp.pep.model.Avaliacao</class>
     <class>br.edu.ifsp.pep.model.Exercicio</class>
     <class>br.edu.ifsp.pep.model.ExercicioFicha</class>
     <class>br.edu.ifsp.pep.model.FichaTreino</class>
-    <shared-cache-mode>NONE</shared-cache-mode>
+    <class>br.edu.ifsp.pep.model.Personal</class>
+    <class>br.edu.ifsp.pep.model.Usuario</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/academia2?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

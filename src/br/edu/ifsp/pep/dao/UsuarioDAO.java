@@ -5,7 +5,9 @@
  */
 package br.edu.ifsp.pep.dao;
 
+import br.edu.ifsp.pep.model.Aluno;
 import br.edu.ifsp.pep.model.Usuario;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -72,6 +74,16 @@ public class UsuarioDAO {
                 .setParameter("codigo", codigo)
                 .setHint(QueryHints.REFRESH, HintValues.TRUE);
         return query.getSingleResult();
+    }
+
+    public List<Usuario> listbyName(String nome) {
+        EntityManager em = this.emf.createEntityManager();
+
+        TypedQuery<Usuario> query = em.createNamedQuery("Usuario.findByName", Usuario.class);
+        query.setParameter("nome", "%" + nome + "%");
+
+        return query.getResultList();
+
     }
 
 }

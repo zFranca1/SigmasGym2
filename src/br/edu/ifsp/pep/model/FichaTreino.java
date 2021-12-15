@@ -33,7 +33,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "FichaTreino.listar",
             query = "SELECT f FROM FichaTreino f "),
     @NamedQuery(name = "FichaTreino.listaNomes",
-            query = "SELECT f FROM FichaTreino f WHERE f.usuario.nome LIKE :aluno")
+            query = "SELECT f FROM FichaTreino f WHERE f.usuario = :usuario")
 })
 public class FichaTreino implements Serializable {
 
@@ -41,14 +41,14 @@ public class FichaTreino implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo")
     private int codigo;
-    
+
     @OneToMany(mappedBy = "FichaTreino", cascade = CascadeType.ALL)
     private List<ExercicioFicha> exerciciosFicha;
-    
+
     @ManyToOne
     @JoinColumn(name = "usuario_codigo")
     private Usuario usuario;
-    
+
     @Column(name = "nome")
     private String nome;
 
@@ -96,11 +96,8 @@ public class FichaTreino implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 19 * hash + this.codigo;
-        hash = 19 * hash + Objects.hashCode(this.exerciciosFicha);
-        hash = 19 * hash + Objects.hashCode(this.usuario);
-        hash = 19 * hash + Objects.hashCode(this.nome);
+        int hash = 7;
+        hash = 53 * hash + this.codigo;
         return hash;
     }
 
@@ -130,7 +127,10 @@ public class FichaTreino implements Serializable {
         }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "FichaTreino{" + "codigo=" + codigo + ", usuario=" + usuario + ", nome=" + nome + '}';
+    }
 
 }

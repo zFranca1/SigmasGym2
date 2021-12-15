@@ -5,6 +5,7 @@
  */
 package br.edu.ifsp.pep.dao;
 
+import br.edu.ifsp.pep.model.ExercicioFicha;
 import br.edu.ifsp.pep.model.FichaTreino;
 import br.edu.ifsp.pep.model.Usuario;
 import java.util.List;
@@ -31,9 +32,45 @@ public class FichaTreinoDAO {
         return this.emf.createEntityManager();
 
     }
-    
-    public void insert(FichaTreino av) {
 
+    public void delete(FichaTreino f) {
+
+        EntityManager em = this.emf.createEntityManager();
+        FichaTreino alf = (FichaTreino) em.find(FichaTreino.class, f.getCodigo());
+        System.out.println(f.toString());
+        em.getTransaction().begin();
+
+        for (ExercicioFicha e : f.getExerciciosFicha()) {
+            System.out.println(e.toString());
+            try {
+                em.remove(em.merge(e));
+            } catch (Exception ex) {
+                em.remove(e);
+            }
+        }
+
+        em.getTransaction().commit();
+
+        em.close();
+
+        excluirFicha(f);
+
+    }
+
+    public void excluirFicha(FichaTreino alf) {
+
+        EntityManager em = this.emf.createEntityManager();
+        em.getTransaction().begin();
+        try {
+            em.remove(em.merge(alf));
+        } catch (Exception ex) {
+            em.remove(alf);
+        }
+        em.getTransaction().commit();
+
+    }
+
+    public void insert(FichaTreino av) {
 
         EntityManager em = this.emf.createEntityManager();
 
@@ -42,7 +79,7 @@ public class FichaTreinoDAO {
         em.getTransaction().commit();
         em.close();
     }
-    
+
     public List<FichaTreino> listAluno(Usuario aluno) {
 
         EntityManager em = this.emf.createEntityManager();
@@ -52,12 +89,13 @@ public class FichaTreinoDAO {
 
         return query.getResultList();
     }
-    public List<FichaTreino> listNomes(String nome) {
+
+    public List<FichaTreino> listNomes(Usuario nome) {
 
         EntityManager em = this.emf.createEntityManager();
 
         TypedQuery<FichaTreino> query = em.createNamedQuery("FichaTreino.listaNomes", FichaTreino.class);
-        query.setParameter("aluno", "%" + nome + "%");
+        query.setParameter("usuario", nome);
 
         return query.getResultList();
     }
@@ -70,7 +108,7 @@ public class FichaTreinoDAO {
 
         return query.getResultList();
     }
-    
+
     public List<FichaTreino> listFichaTreino() {
 
         EntityManager em = this.emf.createEntityManager();

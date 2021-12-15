@@ -3,17 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym/src/br/edu/ifsp/pep/dao/AlunoDAO.java</file>
-            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym/src/br/edu/ifsp/pep/view/MenuPersonal.java</file>
-            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym/src/br/edu/ifsp/pep/model/Aluno.java</file>
-            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym/src/br/edu/ifsp/pep/dao/PersonalDAO.java</file>
-            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym/src/br/edu/ifsp/pep/view/MenuAluno.java</file>
-            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym/src/br/edu/ifsp/pep/view/CadastroAvaliacao.java</file>
-            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym/src/br/edu/ifsp/pep/view/CadastroPersonal.java</file>
-            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym/src/br/edu/ifsp/pep/view/CadastroAluno.java</file>
-            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym/src/br/edu/ifsp/pep/model/Avaliacao.java</file>
-            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym/src/br/edu/ifsp/pep/dao/AvaliacaoDAO.java</file>
-            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym/src/br/edu/ifsp/pep/view/Login.java</file>
+            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym2.1/src/br/edu/ifsp/pep/view/CadastroAvaliacao.java</file>
+            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym2.1/src/br/edu/ifsp/pep/view/CadastroAluno.java</file>
+            <file>file:/C:/Users/joaop/Documents/NetBeansProjects/SigmasGym2.1/src/br/edu/ifsp/pep/view/CadastroFicha.java</file>
         </group>
     </open-files>
 </project-private>

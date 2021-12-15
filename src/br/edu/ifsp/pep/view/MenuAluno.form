@@ -185,6 +185,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Avalia&#xe7;&#xe3;o Fisica"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtAvaliacaoFisicaMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -226,6 +229,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Fichas de Treino"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtFichasTreinoMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

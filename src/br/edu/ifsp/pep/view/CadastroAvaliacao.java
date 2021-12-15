@@ -30,15 +30,47 @@ public class CadastroAvaliacao extends javax.swing.JDialog {
 
     private Aluno aluno;
 
+    List<Avaliacao> lft = new ArrayList<>();
+
     public CadastroAvaliacao() {
         initComponents();
 //        txtNo.setText(UsuarioDAO.getUsu().getNome());
-        atualiza();
+        if (UsuarioDAO.getUsu().getTipo() == 'P') {
+            DefaultTableModel model = (DefaultTableModel) tabelaAvaliacao.getModel();
+            lft = avaDAO.listAvaliacao();
+            for (Avaliacao av : avaDAO.listAvaliacao()) {
+                System.out.println(av.getAluno().toString());
+                model.addRow(new Object[]{av.getCodigo(), av.getAluno().getNome(), av.getPeso(), av.getAltura(), av.getPercentualGordura()});
+            }
 
-        for (Aluno alu : dao.listAluno()) {
+            for (Aluno alu : dao.listAluno()) {
 
-            comboAluno.addItem(alu);
+                comboAluno.addItem(alu);
+            }
+
+            atualiza();
+
+            return;
         }
+        lft = avaDAO.listbyName(UsuarioDAO.getUsu());
+        DefaultTableModel model = (DefaultTableModel) tabelaAvaliacao.getModel();
+        for (Avaliacao av : lft) {
+            model.addRow(new Object[]{av.getCodigo(), av.getAluno().getNome(), av.getPeso(), av.getAltura(), av.getPercentualGordura()});
+        }
+        btnCadastrar.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnDeletar.setEnabled(false);
+        btnBuscar.setEnabled(false);
+        txtAltura.setEditable(false);
+        txtAltura.setEnabled(false);
+        txtBuscar.setEnabled(false);
+        txtBuscar.setEditable(false);
+        txtPercentual.setEditable(false);
+        txtPercentual.setEnabled(false);
+        txtPeso.setEnabled(false);
+        txtPeso.setEditable(false);
+        comboAluno.setEnabled(false);
+        comboAluno.setEditable(false);
 
     }
 
@@ -117,7 +149,7 @@ public class CadastroAvaliacao extends javax.swing.JDialog {
 
         tabelaAvaliacao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Codigo", "Nome Aluno", "Peso", "Altura", "Percentual de Gordura"
@@ -439,14 +471,25 @@ public class CadastroAvaliacao extends javax.swing.JDialog {
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         // TODO add your handling code here:
 
-        List<Avaliacao> listaAvaliacaos = this.avaDAO.listbyName(txtBuscar.getText());
+        UsuarioDAO usuDAO = new UsuarioDAO();
 
-        DefaultTableModel model = (DefaultTableModel) tabelaAvaliacao.getModel();
-        model.setRowCount(0);
-        for (Avaliacao av : listaAvaliacaos) {
-            model.addRow(new Object[]{av.getCodigo(), av.getPeso(), av.getAltura(), av.getPercentualGordura(), av.getAluno().getNome()});
+        List<Usuario> lu = new ArrayList<>();
+
+        lu = usuDAO.listbyName(txtBuscar.getText());
+
+        List<Avaliacao> list = new ArrayList<>();
+        for (Usuario usu : lu) {
+
+            if (avaDAO.listbyName(usu).size() > 0) {
+                list.add(avaDAO.listbyName(usu).get(0));
+            }
         }
-
+        DefaultTableModel model = (DefaultTableModel) tabelaAvaliacao.getModel();
+        model.setNumRows(0);
+        for (Avaliacao av : list) {
+            System.out.println(av.getAluno().toString());
+            model.addRow(new Object[]{av.getCodigo(), av.getAluno().getNome(), av.getPeso(), av.getAltura(), av.getPercentualGordura()});
+        }
         txtBuscar.setText("");
     }//GEN-LAST:event_btnBuscarMouseClicked
 

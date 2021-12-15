@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.ifsp.pep.dao;
 
 import br.edu.ifsp.pep.model.Aluno;
@@ -14,10 +9,6 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-/**
- *
- * @author joaop
- */
 public class AlunoDAO {
 
     private EntityManagerFactory emf;
@@ -25,6 +16,11 @@ public class AlunoDAO {
     public AlunoDAO() {
 
         this.emf = Persistence.createEntityManagerFactory("SigmasGymPU");
+    }
+
+    public EntityManager getEntityManager() {
+
+        return this.emf.createEntityManager();
     }
 
     public void insert(Aluno al) {

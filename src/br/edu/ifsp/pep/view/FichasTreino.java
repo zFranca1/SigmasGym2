@@ -7,10 +7,12 @@ package br.edu.ifsp.pep.view;
 
 import br.edu.ifsp.pep.dao.ExercicioDAO;
 import br.edu.ifsp.pep.dao.FichaTreinoDAO;
+import br.edu.ifsp.pep.dao.UsuarioDAO;
 import br.edu.ifsp.pep.model.Aluno;
 import br.edu.ifsp.pep.model.Exercicio;
 import br.edu.ifsp.pep.model.FichaTreino;
 import br.edu.ifsp.pep.model.Personal;
+import br.edu.ifsp.pep.model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -21,33 +23,58 @@ import javax.swing.table.DefaultTableModel;
  * @author joaop
  */
 public class FichasTreino extends javax.swing.JDialog {
-    
+
     FichaTreinoDAO dao = new FichaTreinoDAO();
 
     /**
      * Creates new form MenuPersonal
      */
+    List<FichaTreino> lft = new ArrayList();
+
     public FichasTreino() {
         initComponents();
+
+        if (UsuarioDAO.getUsu().getTipo() == 'P') {
+            DefaultTableModel model = (DefaultTableModel) TabelaFichas.getModel();
+            lft = dao.listar();
+            for (FichaTreino ef : lft) {
+                model.addRow(new Object[]{ef.getCodigo(), ef.getNome(), ef.getUsuario().getNome()});
+            }
+
+            atualiza();
+
+            return;
+        }
+
+        btnBuscar.setEnabled(false);
+        txtBuscar.setEnabled(false);
+        txtBuscar.setEditable(false);
+        btnCadastrar.setEnabled(false);
+        btnRemover.setEnabled(false);
+        btnVisualizar.setEnabled(true);
+        btnAtualizar.setEnabled(false);
+
         DefaultTableModel model = (DefaultTableModel) TabelaFichas.getModel();
-        for (FichaTreino ef : dao.listar()) {
+        lft = dao.listNomes(UsuarioDAO.getUsu());
+        for (FichaTreino ef : lft) {
             model.addRow(new Object[]{ef.getCodigo(), ef.getNome(), ef.getUsuario().getNome()});
         }
-        
     }
-    
+
     ArrayList<Exercicio> listaexercicios = new ArrayList<>();
-    
+
     public void atualiza() {
-        
+
         DefaultTableModel model = (DefaultTableModel) TabelaFichas.getModel();
-        
+
         while (model.getRowCount() > 0) {//pega a quantidade de linhas da tabela
             model.removeRow(0);
         }
-        
-        for (FichaTreino pe : dao.listFichaTreino()) {
-            model.addRow(new Object[]{pe.getCodigo(), pe.getNome()});
+        lft.clear();
+        lft = dao.listar();
+
+        for (FichaTreino pe : lft) {
+            model.addRow(new Object[]{pe.getCodigo(), pe.getNome(), pe.getUsuario().getNome()});
         }
     }
 
@@ -69,6 +96,9 @@ public class FichasTreino extends javax.swing.JDialog {
         txtBuscar = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
+        btnRemover = new javax.swing.JButton();
+        btnVisualizar = new javax.swing.JButton();
+        btnAtualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -77,7 +107,7 @@ public class FichasTreino extends javax.swing.JDialog {
 
         TabelaFichas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+
             },
             new String [] {
                 "Codigo", "Nome", "Aluno"
@@ -125,6 +155,40 @@ public class FichasTreino extends javax.swing.JDialog {
                 btnBuscarMouseClicked(evt);
             }
         });
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        btnRemover.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
+
+        btnVisualizar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnVisualizar.setText("Visualizar");
+        btnVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisualizarActionPerformed(evt);
+            }
+        });
+
+        btnAtualizar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnAtualizar.setText("Atualizar");
+        btnAtualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAtualizarMouseClicked(evt);
+            }
+        });
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelMenuLayout = new javax.swing.GroupLayout(painelMenu);
         painelMenu.setLayout(painelMenuLayout);
@@ -139,7 +203,7 @@ public class FichasTreino extends javax.swing.JDialog {
                         .addComponent(logo))
                     .addGroup(painelMenuLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(painelMenuLayout.createSequentialGroup()
                                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -147,8 +211,15 @@ public class FichasTreino extends javax.swing.JDialog {
                             .addComponent(jLabel4)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(painelMenuLayout.createSequentialGroup()
-                                .addGap(213, 213, 213)
-                                .addComponent(btnCadastrar)))))
+                                .addGap(10, 10, 10)
+                                .addComponent(btnCadastrar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnAtualizar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnVisualizar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnRemover)
+                                .addGap(10, 10, 10)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelMenuLayout.setVerticalGroup(
@@ -167,9 +238,13 @@ public class FichasTreino extends javax.swing.JDialog {
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(9, 9, 9)
+                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCadastrar)
+                    .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(87, 87, 87))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -197,6 +272,8 @@ public class FichasTreino extends javax.swing.JDialog {
         CadastroFicha cadf = new CadastroFicha();
         cadf.setVisible(true);
 
+        atualiza();
+
     }//GEN-LAST:event_btnCadastrarMouseClicked
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
@@ -210,13 +287,30 @@ public class FichasTreino extends javax.swing.JDialog {
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         // TODO add your handling code here:
 
-//        List<FichaTreino> list = this.dao.listNomes(txtBuscar.getText());
-//
-//        DefaultTableModel model = (DefaultTableModel) TabelaFichas.getModel();
-//        model.setRowCount(0);
-//        for (Exercicio pe : listaexerExercicios) {
-//            model.addRow(new Object[]{pe.getCodigoExercicio(), pe.getNome()});
-//        }
+        UsuarioDAO usuDAO = new UsuarioDAO();
+
+        List<Usuario> lu = new ArrayList<>();
+
+        lu = usuDAO.listbyName(txtBuscar.getText());
+
+        List<FichaTreino> list = new ArrayList<>();
+        for (Usuario usu : lu) {
+
+            if (dao.listNomes(usu).size() > 0) {
+                list.add(dao.listNomes(usu).get(0));
+
+                System.out.println(list.get(list.size() - 1).getUsuario().getNome());
+            }
+
+        }
+
+        DefaultTableModel model = (DefaultTableModel) TabelaFichas.getModel();
+
+        model.setNumRows(0);
+
+        for (FichaTreino pe : list) {
+            model.addRow(new Object[]{pe.getCodigo(), pe.getNome(), pe.getUsuario().getNome()});
+        }
         txtBuscar.setText("");
 
     }//GEN-LAST:event_btnBuscarMouseClicked
@@ -226,6 +320,46 @@ public class FichasTreino extends javax.swing.JDialog {
 
 
     }//GEN-LAST:event_TabelaFichasMouseClicked
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+
+        int pos = TabelaFichas.getSelectedRow();
+        if (pos == -1) {
+            JOptionPane.showMessageDialog(this, "escolha uma ficha");
+        } else {
+            FichaTreino ft = lft.get(pos);
+
+            dao.delete(ft);
+            atualiza();
+        }
+
+    }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
+        int pos = TabelaFichas.getSelectedRow();
+        if (pos == -1) {
+            JOptionPane.showMessageDialog(this, "escolha uma ficha");
+        } else {
+            FichaTreino ft = lft.get(pos);
+
+            CadastroFicha cf = new CadastroFicha(ft);
+            cf.setVisible(true);
+        }
+    }//GEN-LAST:event_btnVisualizarActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAtualizarMouseClicked
+        // TODO add your handling code here:
+
+        atualiza();
+    }//GEN-LAST:event_btnAtualizarMouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,8 +401,11 @@ public class FichasTreino extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TabelaFichas;
+    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnRemover;
+    private javax.swing.JButton btnVisualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;

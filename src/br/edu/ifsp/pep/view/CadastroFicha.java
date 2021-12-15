@@ -16,6 +16,7 @@ import br.edu.ifsp.pep.model.ExercicioFicha;
 import br.edu.ifsp.pep.model.FichaTreino;
 import br.edu.ifsp.pep.model.Personal;
 import br.edu.ifsp.pep.model.Usuario;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -28,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 public class CadastroFicha extends javax.swing.JDialog {
 
     private List<ExercicioFicha> exerciciosFicha = new ArrayList<>();
+    private FichaTreino ficha = null;
 
     private ExercicioDAO daoExercicio = new ExercicioDAO();
     private AlunoDAO daoAluno = new AlunoDAO();
@@ -36,18 +38,67 @@ public class CadastroFicha extends javax.swing.JDialog {
     /**
      * Creates new form MenuPersonal
      */
+    List<Exercicio> le = new ArrayList();
+    List<Aluno> la = new ArrayList();
+
     public CadastroFicha() {
         initComponents();
 
-        for (Exercicio ex : daoExercicio.listExercises()) {
+        le = daoExercicio.listExercises();
+        la = daoAluno.listAluno();
+
+        for (Exercicio ex : le) {
             ComboExercicios.addItem(ex);
         }
 
-        for (Aluno alu : daoAluno.listAluno()) {
+        for (Aluno alu : la) {
             ComboAlunos.addItem(alu);
         }
 
-//        atualiza();
+        atualiza();
+    }
+
+    public CadastroFicha(FichaTreino ficha) {
+        initComponents();
+
+        if (UsuarioDAO.getUsu().getTipo() == 'A') {
+
+            atualiza();
+
+            for (Exercicio ex : le) {
+                ComboExercicios.addItem(ex);
+            }
+
+            ComboAlunos.addItem((Aluno) ficha.getUsuario());
+            this.ficha = ficha;
+
+            atualiza();
+
+            btnCadastrar.setEnabled(false);
+
+            btnSalvar.setEnabled(false);
+            txtCarga.setEditable(false);
+            txtIntervalo.setEditable(false);
+            txtNome.setEditable(false);
+            txtRepeticoes.setEditable(false);
+            txtSeries.setEditable(false);
+            ComboAlunos.setEnabled(false);
+            ComboExercicios.setEnabled(false);
+
+            return;
+
+        }
+
+        txtNome.setText(ficha.getNome());
+
+        for (Exercicio ex : le) {
+            ComboExercicios.addItem(ex);
+        }
+
+        ComboAlunos.addItem((Aluno) ficha.getUsuario());
+        this.ficha = ficha;
+
+        atualiza();
     }
 
     public void atualiza() {
@@ -58,9 +109,14 @@ public class CadastroFicha extends javax.swing.JDialog {
             model.removeRow(0);
         }
 
-        for (ExercicioFicha ef : exerciciosFicha) {
-
-            model.addRow(new Object[]{ef.getCodigo(), ef.getRepeticoes(), ef.getSeries(), ef.getCarga(), ef.getIntervalo()});
+        if (ficha != null) {
+            for (ExercicioFicha ef : ficha.getExerciciosFicha()) {
+                model.addRow(new Object[]{ef.getCodigo(), ef.getRepeticoes(), ef.getSeries(), ef.getCarga(), ef.getIntervalo(), ef.getExercicio().getNome()});
+            }
+        } else {
+            for (ExercicioFicha ef : exerciciosFicha) {
+                model.addRow(new Object[]{ef.getCodigo(), ef.getRepeticoes(), ef.getSeries(), ef.getCarga(), ef.getIntervalo(), ef.getExercicio().getNome()});
+            }
         }
 
     }
@@ -87,14 +143,13 @@ public class CadastroFicha extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
         btnCadastrar = new javax.swing.JButton();
-        btnDeletar = new javax.swing.JButton();
-        btnAlterar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         ComboExercicios = new javax.swing.JComboBox<>();
         ComboAlunos = new javax.swing.JComboBox<>();
         btnSalvar = new javax.swing.JButton();
         txtIntervalo = new javax.swing.JTextField();
         txtNome = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -103,10 +158,10 @@ public class CadastroFicha extends javax.swing.JDialog {
 
         TabelaExercicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Codigo", "Repetições", "Series", "Carga", "Intervalo"
+                "Codigo", "Repetições", "Séries", "Carga", "Intervalo", "Exercicio"
             }
         ));
         TabelaExercicios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -148,7 +203,7 @@ public class CadastroFicha extends javax.swing.JDialog {
 
         labelEmail.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelEmail.setForeground(new java.awt.Color(255, 255, 255));
-        labelEmail.setText("Series");
+        labelEmail.setText("Séries");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -169,32 +224,6 @@ public class CadastroFicha extends javax.swing.JDialog {
             }
         });
 
-        btnDeletar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnDeletar.setText("Deletar");
-        btnDeletar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnDeletarMouseClicked(evt);
-            }
-        });
-        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeletarActionPerformed(evt);
-            }
-        });
-
-        btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnAlterar.setText("Alterar");
-        btnAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAlterarMouseClicked(evt);
-            }
-        });
-        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAlterarActionPerformed(evt);
-            }
-        });
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Nome");
@@ -203,6 +232,11 @@ public class CadastroFicha extends javax.swing.JDialog {
         btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSalvarMouseClicked(evt);
+            }
+        });
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
             }
         });
 
@@ -237,49 +271,47 @@ public class CadastroFicha extends javax.swing.JDialog {
                         .addGap(81, 81, 81)
                         .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(painelMenuLayout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(btnCadastrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelMenuLayout.createSequentialGroup()
                         .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(painelMenuLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel2))
                             .addGroup(painelMenuLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(ComboExercicios, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(painelMenuLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(txtRepeticoes, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(8, 8, 8)
+                                .addComponent(txtRepeticoes, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ComboExercicios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(painelMenuLayout.createSequentialGroup()
                                 .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(painelMenuLayout.createSequentialGroup()
-                                        .addGap(30, 30, 30)
-                                        .addComponent(labelEmail))
+                                    .addComponent(labelEmail)
                                     .addComponent(jLabel5)
-                                    .addComponent(txtIntervalo, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(painelMenuLayout.createSequentialGroup()
-                                        .addGap(2, 2, 2)
-                                        .addComponent(txtSeries, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(17, 17, 17)
+                                    .addComponent(txtSeries, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCarga)
                                     .addGroup(painelMenuLayout.createSequentialGroup()
+                                        .addGap(28, 28, 28)
                                         .addComponent(jLabel3)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(painelMenuLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCarga))))
                             .addGroup(painelMenuLayout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                                .addComponent(ComboAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtIntervalo)
+                                    .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(painelMenuLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelMenuLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(painelMenuLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(painelMenuLayout.createSequentialGroup()
+                                .addGap(225, 225, 225)
+                                .addComponent(btnCadastrar)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         painelMenuLayout.setVerticalGroup(
@@ -305,27 +337,24 @@ public class CadastroFicha extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtRepeticoes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSeries, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCarga, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
-                        .addComponent(labelEmail)
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel5)
-                        .addGap(5, 5, 5)))
+                            .addComponent(txtCarga, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSeries, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(labelEmail))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtIntervalo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(ComboAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ComboExercicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34))
         );
 
@@ -371,6 +400,7 @@ public class CadastroFicha extends javax.swing.JDialog {
         fichaDAO.insert(ficha);
 
 //        atualiza();
+        this.dispose();
 
     }//GEN-LAST:event_btnCadastrarMouseClicked
 
@@ -382,33 +412,20 @@ public class CadastroFicha extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
-    private void btnDeletarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeletarMouseClicked
-        // TODO add your handling code here:
-
-
-    }//GEN-LAST:event_btnDeletarMouseClicked
-
-    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeletarActionPerformed
-
-    private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
-        // TODO add your handling code here:
-
-
-    }//GEN-LAST:event_btnAlterarMouseClicked
-
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAlterarActionPerformed
-
     private void TabelaExerciciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaExerciciosMouseClicked
-        // TODO add your handling code here:
+        List<ExercicioFicha> lft = new ArrayList();
+        int pos = TabelaExercicios.getSelectedRow();
+        lft = ficha.getExerciciosFicha();
+        if (pos == -1) {
+            JOptionPane.showMessageDialog(this, "escolha uma ficha");
+        } else {
+            ExercicioFicha ef = lft.get(pos);
 
-        if (TabelaExercicios.getSelectedRow() != -1) {
+            txtCarga.setText(Integer.toString(ef.getCarga()));
+            txtIntervalo.setText(Float.toString(ef.getIntervalo()));
+            txtRepeticoes.setText(Integer.toString(ef.getRepeticoes()));
+            txtSeries.setText(Integer.toString(ef.getSeries()));
 
-            txtRepeticoes.setText(TabelaExercicios.getValueAt(TabelaExercicios.getSelectedRow(), 1).toString());
-            txtSeries.setText(TabelaExercicios.getValueAt(TabelaExercicios.getSelectedRow(), 2).toString());
         }
     }//GEN-LAST:event_TabelaExerciciosMouseClicked
 
@@ -433,6 +450,10 @@ public class CadastroFicha extends javax.swing.JDialog {
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -476,13 +497,12 @@ public class CadastroFicha extends javax.swing.JDialog {
     private javax.swing.JComboBox<Aluno> ComboAlunos;
     private javax.swing.JComboBox<Exercicio> ComboExercicios;
     private javax.swing.JTable TabelaExercicios;
-    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;

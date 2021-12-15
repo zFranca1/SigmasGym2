@@ -19,7 +19,7 @@ public class MenuAluno extends javax.swing.JDialog {
     public MenuAluno() {
         initComponents();
         txtNomeAlunolLogado.setText(UsuarioDAO.getUsu().getNome());
-
+        
     }
 
     /**
@@ -95,6 +95,11 @@ public class MenuAluno extends javax.swing.JDialog {
         txtAvaliacaoFisica.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txtAvaliacaoFisica.setForeground(new java.awt.Color(255, 255, 255));
         txtAvaliacaoFisica.setText("Avaliação Fisica");
+        txtAvaliacaoFisica.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtAvaliacaoFisicaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelCadastroAlunoLayout = new javax.swing.GroupLayout(painelCadastroAluno);
         painelCadastroAluno.setLayout(painelCadastroAlunoLayout);
@@ -118,6 +123,11 @@ public class MenuAluno extends javax.swing.JDialog {
         txtFichasTreino.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txtFichasTreino.setForeground(new java.awt.Color(255, 255, 255));
         txtFichasTreino.setText("Fichas de Treino");
+        txtFichasTreino.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtFichasTreinoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelCadastroPersonalLayout = new javax.swing.GroupLayout(painelCadastroPersonal);
         painelCadastroPersonal.setLayout(painelCadastroPersonalLayout);
@@ -173,6 +183,20 @@ public class MenuAluno extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtFichasTreinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtFichasTreinoMouseClicked
+        // TODO add your handling code here:
+
+        FichasTreino fic = new FichasTreino();
+        fic.setVisible(true);
+    }//GEN-LAST:event_txtFichasTreinoMouseClicked
+
+    private void txtAvaliacaoFisicaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAvaliacaoFisicaMouseClicked
+        // TODO add your handling code here:
+        
+        CadastroAvaliacao cada = new CadastroAvaliacao();
+        cada.setVisible(true);
+    }//GEN-LAST:event_txtAvaliacaoFisicaMouseClicked
 
     /**
      * @param args the command line arguments

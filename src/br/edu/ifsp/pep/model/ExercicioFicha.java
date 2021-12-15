@@ -170,7 +170,9 @@ public class ExercicioFicha implements Serializable {
 
     @Override
     public String toString() {
-        return "ExercicioFicha{" + "codigo=" + codigo + ", series=" + series + ", repeticoes=" + repeticoes + ", carga=" + carga + ", intervalo=" + intervalo + ", exercicio=" + exercicio + ", fichaTreino=" + fichaTreino + '}';
+        return "ExercicioFicha{" + "codigo=" + codigo + ", series=" + series + ", repeticoes=" + repeticoes + ", carga=" + carga + ", intervalo=" + intervalo + ", exercicio=" + exercicio.getNome() + '}';
     }
+
+   
 
 }

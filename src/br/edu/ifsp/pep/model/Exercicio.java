@@ -79,12 +79,11 @@ public class Exercicio implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + this.codigoExercicio;
-        hash = 53 * hash + Objects.hashCode(this.nome);
-        hash = 53 * hash + Objects.hashCode(this.exercicios);
+        int hash = 3;
+        hash = 97 * hash + this.codigoExercicio;
         return hash;
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -114,5 +113,7 @@ public class Exercicio implements Serializable {
     public String toString() {
         return this.getCodigoExercicio() + " - " + this.getNome();
     }
+
+    
 
 }
